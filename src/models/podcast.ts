@@ -2,6 +2,7 @@ export interface Podcast {
   id: string;
   title: string;
   author: string;
+  imgSrc: string;
 }
 
 export interface PodcastFeed {
@@ -49,9 +50,13 @@ export interface Episode {
   trackTimeMillis: number;
   releaseDate: Date;
   episodeUrl: string;
+  collectionName: string;
+  artistName: string;
+  imgSrc: string;
 }
 
 export interface EpisodeApi {
+  artistName: string;
   artworkUrl60: string;
   artistViewUrl: string;
   contentAdvisoryRating: string;

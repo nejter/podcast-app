@@ -34,13 +34,15 @@ const EpisodeDetailView: React.FC = () => {
   return (
     <div>
       <main>
-        {episode && <audio
-          controls
-          src={episode.episodeUrl}
-          onLoadStart={() => setIsLoadingAudio(true)}
-          onCanPlay={() => setIsLoadingAudio(false)}
-          className={isLoadingAudio ? 'audio-loading' : ''}
-        />}
+        {episode && (
+          <audio
+            controls
+            src={episode.episodeUrl}
+            onLoadStart={() => setIsLoadingAudio(true)}
+            onCanPlay={() => setIsLoadingAudio(false)}
+            className={isLoadingAudio ? 'audio-loading' : ''}
+          />
+        )}
         {isLoadingAudio && <div>Loading audio...</div>}
       </main>
     </div>

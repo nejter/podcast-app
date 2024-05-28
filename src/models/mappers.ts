@@ -5,6 +5,7 @@ export const mapPodcastEntryToPodcast = (entry: Entry): Podcast => {
     id: entry.id.attributes['im:id'],
     title: entry['im:name'].label,
     author: entry['im:artist'].label,
+    imgSrc: entry['im:image'][0]?.label,
   };
 };
 
@@ -15,5 +16,8 @@ export const mapApiEpisodeToEpisode = (episode: EpisodeApi): Episode => {
     trackTimeMillis: episode.trackTimeMillis || 0,
     releaseDate: episode.releaseDate,
     episodeUrl: episode.episodeUrl,
+    artistName: episode.artistName,
+    collectionName: episode.collectionName,
+    imgSrc: episode.artworkUrl60,
   };
 };
