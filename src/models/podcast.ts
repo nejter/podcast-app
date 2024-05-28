@@ -53,6 +53,7 @@ export interface Episode {
   collectionName: string;
   artistName: string;
   imgSrc: string;
+  description: string;
 }
 
 export interface EpisodeApi {

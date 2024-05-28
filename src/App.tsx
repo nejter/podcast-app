@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import MainView from './views/MainView/MainView';
 import PodcastDetailView from './views/PodcastDetailView/PodcastDetailView';
 import EpisodeDetailView from './views/EpisodeDetailView/EpisodeDetailView';
+import './app.css';
 
 const App: React.FC = () => (
   <Router>

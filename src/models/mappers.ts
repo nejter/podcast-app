@@ -19,5 +19,6 @@ export const mapApiEpisodeToEpisode = (episode: EpisodeApi): Episode => {
     artistName: episode.artistName,
     collectionName: episode.collectionName,
     imgSrc: episode.artworkUrl60,
+    description: episode.description,
   };
 };

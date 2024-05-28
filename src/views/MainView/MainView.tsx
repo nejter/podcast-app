@@ -1,23 +1,31 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useCallback, useState } from 'react';
 import { useTopPodcasts } from '../../services/podcastService';
 import { Podcast } from '../../models/podcast';
 import './mainView.css';
-import Header from '../../components/Header';
+import Header from '../../shared-components/Header';
+import Filter from './components/Filter';
+import PodcastCounter from './components/PodcastCounter';
+import PodcastCard from './components/PodcastCard';
 
 const MainView: React.FC = () => {
   const [filterText, setFilterText] = useState('');
   const { data: podcasts, error } = useTopPodcasts();
 
-  const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFilterText(event.target.value);
-  };
+  const handleFilterChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setFilterText(event.target.value);
+    },
+    [],
+  );
 
   const filteredPodcasts = podcasts?.filter(
     (podcast: Podcast) =>
       podcast.title.toLowerCase().includes(filterText.toLowerCase()) ||
       podcast.author.toLowerCase().includes(filterText.toLowerCase()),
   );
+
+  const podcastsAmount =
+    filteredPodcasts?.length || (!filteredPodcasts && podcasts?.length);
 
   if (error) {
     console.error('Error loading podcast.');
@@ -28,31 +36,15 @@ const MainView: React.FC = () => {
     <div className="main-view">
       <Header />
       <div className="filter-container">
-        {(filteredPodcasts?.length || podcasts?.length) && (
-          <span className="item-count">
-            {filteredPodcasts?.length || podcasts?.length}
-          </span>
-        )}
-        <input
-          type="text"
-          value={filterText}
-          onChange={handleFilterChange}
-          placeholder="Filter podcasts..."
-          className="filter-input"
+        {!!podcastsAmount && <PodcastCounter amount={podcastsAmount} />}
+        <Filter
+          filterText={filterText}
+          handleFilterChange={handleFilterChange}
         />
       </div>
       <div className="podcast-grid">
         {filteredPodcasts?.map((podcast) => {
-          const { id, imgSrc, title, author } = podcast;
-          return (
-            <div key={id} className="podcast-card">
-              <Link to={`/podcast/${id}`} className="podcast-link">
-                <img src={imgSrc} alt={title} className="author-image" />
-                <h2 className="podcast-title">{title}</h2>
-                <p className="podcast-author">Author: {author}</p>
-              </Link>
-            </div>
-          );
+          return <PodcastCard key={podcast.id} podcast={podcast} />;
         })}
       </div>
     </div>
