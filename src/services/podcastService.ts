@@ -9,8 +9,8 @@ import {
 } from '../utils/constants';
 import { queryKeys } from '../utils/queryKeys';
 import {
-  mapApiEpisodeToEpisode,
-  mapPodcastEntryToPodcast,
+  mapEpisodeApiToEpisodeEntity,
+  mapEntryApiToPodcastEnity,
 } from '../models/mappers';
 
 export const fetchTopPodcasts = async (
@@ -18,14 +18,14 @@ export const fetchTopPodcasts = async (
 ): Promise<Podcast[]> => {
   const response = await axios.get(PODCASTS_URL(limit));
   return response.data.feed.entry.map((entry: Entry) =>
-    mapPodcastEntryToPodcast(entry),
+    mapEntryApiToPodcastEnity(entry),
   );
 };
 
 export const fetchPodcastDetails = async (id: string) => {
   const response = await axios.get(PODCAST_DETAIL_URL(id));
   return response.data.results.map((episode: EpisodeApi) =>
-    mapApiEpisodeToEpisode(episode),
+    mapEpisodeApiToEpisodeEntity(episode),
   );
 };
 

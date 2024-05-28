@@ -16,7 +16,7 @@ const PodcastSummary: React.FC<IPodcastSummary> = ({
     <img src={imgSrc} alt={collectionName} className="podcast-image" />
     <div className="podcast-info">
       <h2>{collectionName}</h2>
-      <p className="podcast-author">by {artistName}</p>
+      {artistName && <p className="podcast-author">by {artistName}</p>}
     </div>
   </div>
 );

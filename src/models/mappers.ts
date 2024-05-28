@@ -1,6 +1,6 @@
 import { Entry, Episode, EpisodeApi, Podcast } from './podcast';
 
-export const mapPodcastEntryToPodcast = (entry: Entry): Podcast => {
+export const mapEntryApiToPodcastEnity = (entry: Entry): Podcast => {
   return {
     id: entry.id.attributes['im:id'],
     title: entry['im:name'].label,
@@ -9,7 +9,7 @@ export const mapPodcastEntryToPodcast = (entry: Entry): Podcast => {
   };
 };
 
-export const mapApiEpisodeToEpisode = (episode: EpisodeApi): Episode => {
+export const mapEpisodeApiToEpisodeEntity = (episode: EpisodeApi): Episode => {
   return {
     trackName: episode.trackName,
     trackId: episode.trackId,
