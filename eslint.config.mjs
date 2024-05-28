@@ -5,6 +5,6 @@ export default tseslint.config(
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   {
-    ignores: ['webpack.config.js'],
+    ignores: ['webpack.config.js', 'jest.config.js', 'cypress', 'config'],
   },
 );
