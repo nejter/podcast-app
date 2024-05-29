@@ -1,21 +1,30 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Outlet, useParams } from 'react-router-dom';
 import './PodcastDetailView.css';
 import Header from '../../shared-components/Header';
 import { usePodcastDetails } from '../../services/podcastService';
 import PodcastSummary from '../../shared-components/PodcastSummary';
 import AmountOfEpisodes from './components/AmountOfEpisodes';
 import EpisodesTable from './components/EpisodesTable';
+import useEpisodeTableVisibility from './hooks/useEpisodeTableVisibility';
 
 const PodcastDetailView: React.FC = () => {
   const { podcastId } = useParams<{ podcastId: string }>();
+  const { isVisible, hideTable } = useEpisodeTableVisibility();
+  const [isLoadingAudio, setIsLoadingAudio] = useState(false);
 
   if (!podcastId) {
     console.error('Error: Podcast ID is missing.');
     return null;
   }
 
-  const { data: podcastDetails, error } = usePodcastDetails(podcastId);
+  const {
+    data: podcastDetails,
+    error,
+    isLoading,
+  } = usePodcastDetails(podcastId);
+
+  const amountOfEpisodes = podcastDetails?.length;
 
   if (error) {
     console.error("Error loading podcast's details.");
@@ -26,22 +35,24 @@ const PodcastDetailView: React.FC = () => {
 
   return (
     <div className="podcast-detail-view">
-      <Header />
+      <Header isLoading={isLoading || isLoadingAudio} />
       <div className="podcast-summary-container">
         <PodcastSummary
           artistName={artistName}
           collectionName={collectionName}
           imgSrc={imgSrc}
         />
-        <main className="episodes-section">
-          <AmountOfEpisodes amount={podcastDetails?.length} />
-          {!!podcastDetails?.length && (
+        <Outlet context={{ isLoadingAudio, setIsLoadingAudio }} />
+        {isVisible && !!amountOfEpisodes && (
+          <main className="episodes-section">
+            <AmountOfEpisodes amount={amountOfEpisodes} />
             <EpisodesTable
               podcastId={podcastId}
               podcastDetails={podcastDetails}
+              onEpisodeLinkClick={hideTable}
             />
-          )}
-        </main>
+          </main>
+        )}
       </div>
     </div>
   );

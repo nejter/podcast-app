@@ -49,6 +49,7 @@
   "dependencies": {
     "@babel/preset-react": "^7.24.6",
     "@tanstack/react-query": "^5.40.0",
+    "@tanstack/react-query-persist-client": "^5.40.0",
     "@typescript-eslint/eslint-plugin": "^7.11.0",
     "axios": "^1.7.2",
     "jest-environment-jsdom": "^29.7.0",

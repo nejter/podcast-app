@@ -12,6 +12,7 @@ import {
   mapEpisodeApiToEpisodeEntity,
   mapEntryApiToPodcastEnity,
 } from '../models/mappers';
+import { experimental_createPersister as createPersister } from '@tanstack/react-query-persist-client';
 
 export const fetchTopPodcasts = async (
   limit = TOP_PODCAST_LIMIT,
@@ -35,6 +36,9 @@ export const useTopPodcasts = (limit = TOP_PODCAST_LIMIT) => {
     queryFn: () => fetchTopPodcasts(limit),
     staleTime: ONE_DAY_MS,
     gcTime: ONE_DAY_MS,
+    persister: createPersister({
+      storage: localStorage,
+    }),
   };
 
   return useQuery<Podcast[]>(options);
@@ -46,6 +50,9 @@ export const usePodcastDetails = (id: string) => {
     queryFn: () => fetchPodcastDetails(id),
     staleTime: ONE_DAY_MS,
     gcTime: ONE_DAY_MS,
+    persister: createPersister({
+      storage: localStorage,
+    }),
   };
 
   return useQuery<Episode[]>(options);

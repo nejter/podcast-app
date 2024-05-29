@@ -3,8 +3,6 @@ import { useParams } from 'react-router-dom';
 import { usePodcastDetails } from '../../services/podcastService';
 import { Episode } from '../../models/podcast';
 import './episodeDetailView.css';
-import Header from '../../shared-components/Header';
-import PodcastSummary from '../../shared-components/PodcastSummary';
 import EpisodeAudio from './components/EpisodeAudio';
 import EpisodeInfo from './components/EpisodeInfo';
 
@@ -20,7 +18,6 @@ const EpisodeDetailView: React.FC = () => {
   }
 
   const { data: podcastDetails, error } = usePodcastDetails(podcastId);
-  const artistName = podcastDetails?.[0]?.artistName;
 
   if (error) {
     console.error('Error loading episode details');
@@ -35,26 +32,15 @@ const EpisodeDetailView: React.FC = () => {
     return;
   }
 
-  const { collectionName, imgSrc, episodeUrl, trackName, description } =
-    episode || {};
+  const { episodeUrl, trackName, description } = episode || {};
 
   return (
-    <div className="podcast-detail-view">
-      <Header />
-      <div className="podcast-summary-container">
-        <PodcastSummary
-          artistName={artistName}
-          collectionName={collectionName}
-          imgSrc={imgSrc}
-        />
-        <main className="episodes-section box-with-shadow p-10 mt-20">
-          <div className="episode-info">
-            <EpisodeInfo trackName={trackName} description={description} />
-            {episodeUrl && <EpisodeAudio episodeUrl={episodeUrl} />}
-          </div>
-        </main>
+    <main className="episodes-section box-with-shadow p-10 mt-20">
+      <div className="episode-info">
+        <EpisodeInfo trackName={trackName} description={description} />
+        {episodeUrl && <EpisodeAudio episodeUrl={episodeUrl} />}
       </div>
-    </div>
+    </main>
   );
 };
 

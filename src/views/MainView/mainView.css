@@ -92,3 +92,9 @@ h1 {
   font-size: 14px;
   color: #666;
 }
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

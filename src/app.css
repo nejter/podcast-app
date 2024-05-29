@@ -2,10 +2,9 @@
   border: 4px solid #f3f3f3;
   border-radius: 50%;
   border-top: 4px solid #0073e6;
-  width: 40px;
-  height: 40px;
+  width: 10px;
+  height: 10px;
   animation: spin 2s linear infinite;
-  margin: 50px auto;
 }
 
 @keyframes spin {
@@ -20,11 +19,8 @@
 
 .loader-wrapper {
   display: grid;
-  justify-content: center;
-}
-
-.loader-text {
-  margin-top: -45px;
+  width: max-content;
+  justify-items: center;
 }
 
 a {

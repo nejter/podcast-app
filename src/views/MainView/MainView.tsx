@@ -9,7 +9,7 @@ import PodcastCard from './components/PodcastCard';
 
 const MainView: React.FC = () => {
   const [filterText, setFilterText] = useState('');
-  const { data: podcasts, error } = useTopPodcasts();
+  const { data: podcasts, error, isLoading } = useTopPodcasts();
 
   const handleFilterChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,7 +34,7 @@ const MainView: React.FC = () => {
 
   return (
     <div className="main-view">
-      <Header />
+      <Header isLoading={isLoading} />
       <div className="filter-container">
         {!!podcastsAmount && <PodcastCounter amount={podcastsAmount} />}
         <Filter

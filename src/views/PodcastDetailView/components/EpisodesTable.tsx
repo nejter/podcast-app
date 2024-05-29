@@ -1,15 +1,18 @@
 import React from 'react';
 import { Episode } from '../../../models/podcast';
 import { formatDuration } from '../../../utils/utils';
+import { Link } from 'react-router-dom';
 
 interface IEpisodesTable {
   podcastDetails: Episode[];
   podcastId: string;
+  onEpisodeLinkClick: () => void;
 }
 
 const EpisodesTable: React.FC<IEpisodesTable> = ({
   podcastDetails,
   podcastId,
+  onEpisodeLinkClick,
 }) => {
   return (
     <table className="episodes-table">
@@ -29,9 +32,12 @@ const EpisodesTable: React.FC<IEpisodesTable> = ({
               className={index % 2 === 0 ? 'episodes-table-grey-row' : ''}
             >
               <td>
-                <a href={`/podcast/${podcastId}/episode/${trackId}`}>
+                <Link
+                  to={`/podcast/${podcastId}/episode/${trackId}`}
+                  onClick={onEpisodeLinkClick}
+                >
                   {trackName}
-                </a>
+                </Link>
               </td>
               <td>{new Date(releaseDate).toLocaleDateString()}</td>
               <td>{trackTimeMillis ? formatDuration(trackTimeMillis) : '-'}</td>
